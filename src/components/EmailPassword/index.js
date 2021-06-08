@@ -28,6 +28,7 @@ class EmailPassword extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
+      // this is where you will be sent to after click recover pw
       url: 'http://localhost:3000/login',
     };
     try {
