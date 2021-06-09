@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './default.scss';
 import Homepage from './pages/Homepage';
@@ -13,8 +13,15 @@ import MainLayout from './Layouts/MainLayout';
 import HomepageLayout from './Layouts/HomepageLayout';
 import Recovery from './pages/Recovery';
 
-class App extends Component {
+const App =(props)=> {
   authListener = null;
+
+  useEffect(() => {
+    effect
+    return () => {
+      cleanup
+    };
+  }, []);
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
@@ -37,7 +44,7 @@ class App extends Component {
     this.authListener();
   }
 
-  render() {
+  
     const { currentUser } = this.props;
     return (
       <div className="App">
@@ -86,7 +93,7 @@ class App extends Component {
         </Switch>
       </div>
     );
-  }
+  
 }
 
 const mapStateToProps = ({ user }) => ({
