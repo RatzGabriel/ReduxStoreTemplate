@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  resetAllAuthForms,
+  resetPassword,
+} from '../../Redux/User/user.actions';
 import { withRouter } from 'react-router';
-import { auth } from '../../firebase/Utils';
 import AuthWrapper from '../AuthWrapper';
 import Button from '../Forms/Buttons';
 import FormInput from '../Forms/formInput';
 
+const mapState = ({ user }) => ({
+  resetPasswordSuccess: user.resetPasswordSuccess,
+  resetPasswordError: user.resetPasswordError,
+});
+
 const EmailPassword = (props) => {
+  const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    if (resetPasswordSuccess) {
+      dispatch(resetAllAuthForms());
+      props.history.push('/');
+    }
+  }, [resetPasswordSuccess]);
+
+  useEffect(() => {
+    if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+      setErrors(resetPasswordError);
+    }
+  }, [resetPasswordError]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const config = {
-        // change this later to live environment
-        url: 'http://localhost:3000/login',
-      };
-      await auth
-        .sendPasswordResetEmail(email, config)
-        .then(() => {
-          props.history.push('/login');
-        })
-        .catch(() => {
-          const err = ['Email not found. Please try again'];
-          setErrors(err);
-        });
-    } catch (error) {
-      // console.log('ez', error);
-    }
+    dispatch(resetPassword({ email }));
   };
 
   const configAuthWrapper = {
@@ -55,7 +62,6 @@ const EmailPassword = (props) => {
             handleChange={(e) => setEmail(e.target.value)}
           />
           <Button type="submit">Email Password</Button>
-          <button onClick={() => console.log(errors)}>status</button>
         </form>
       </div>
     </AuthWrapper>
