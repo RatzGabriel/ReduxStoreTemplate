@@ -42,6 +42,16 @@ export const userError = (err) => ({
   payload: err,
 });
 
+export const resetPasswordStart = (userCredentials) => ({
+  type: userTypes.RESET_PASSWORD_START,
+  payload: userCredentials,
+});
+
+export const resetPasswordSuccess = () => ({
+  type: userTypes.RESET_PASSWORD_SUCCESS,
+  payload: true,
+});
+
 // export const signInUser =
 //   ({ email, password }) =>
 //   async (dispatch) => {};

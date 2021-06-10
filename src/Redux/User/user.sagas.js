@@ -1,7 +1,12 @@
 import userTypes from './user.types';
 import { all, call, takeLatest, put } from 'redux-saga/effects';
 
-import { signInSuccess, signOutUserSuccess, userError } from './user.actions';
+import {
+  signInSuccess,
+  signOutUserSuccess,
+  userError,
+  resetPasswordSuccess,
+} from './user.actions';
 import {
   auth,
   handleUserProfile,
@@ -89,11 +94,18 @@ export function* onSignUpUserStart() {
   yield takeLatest(userTypes.SIGN_UP_USER_START, signUpUser);
 }
 
+export function* resetPassword({ payload: { email } }) {}
+
+export function* onResetPasswordStart() {
+  yield takeLatest(userTypes.RESET_PASSWORD_START);
+}
+
 export default function* userSagas() {
   yield all([
     call(onEmailSignInStart),
     call(onCheckUserSession),
     call(onSignOutUserStart),
     call(onSignUpUserStart),
+    call(onResetPasswordStart),
   ]);
 }
