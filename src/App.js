@@ -24,6 +24,7 @@ import HomepageLayout from './Layouts/HomepageLayout';
 import AdminToolbar from './components/AdminToolbar';
 import AdminLayout from './Layouts/AdminLayout';
 import DashBoardLayout from './Layouts/DashboardLayout';
+import Search from './pages/Search';
 
 const App = (props) => {
   const dispatch = useDispatch();
@@ -99,6 +100,23 @@ const App = (props) => {
             </WithAuth>
           )}
         />
+        <Route
+          exact
+          path="/search"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          )}
+        ></Route>
+        <Route
+          path="/search/:filterType"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          )}
+        ></Route>
       </Switch>
     </div>
   );
