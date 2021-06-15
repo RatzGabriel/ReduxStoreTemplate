@@ -35,7 +35,7 @@ export const handleFetchProducts = ({
       .get()
       .then((snapshot) => {
         const totalCount = snapshot.size;
-
+        console.log('perzistproducts,', persistProducts);
         const data = [
           ...persistProducts,
           ...snapshot.docs.map((doc) => {

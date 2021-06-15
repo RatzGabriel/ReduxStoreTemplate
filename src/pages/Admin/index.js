@@ -10,6 +10,7 @@ import {
   fetchProductsStart,
   deleteProductStart,
 } from '../../Redux/Products/products.actions';
+import LoadMore from '../../components/LoadMore';
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -55,6 +56,20 @@ const Admin = () => {
   const configModal = {
     hideModal,
     toggleModal,
+  };
+  const { data, queryDoc, isLastPage } = products;
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        startAfterDoc: queryDoc,
+        persistProducts: data,
+      })
+    );
+  };
+
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore,
   };
   return (
     <div className="admin">
@@ -121,19 +136,24 @@ const Admin = () => {
                   cellSpacing="0"
                 >
                   <tbody>
-                    {products.length > 0 &&
-                      products.map((product, index) => {
+                    {Array.isArray(data) &&
+                      data.length > 0 &&
+                      data.map((product, index) => {
                         const {
                           productName,
                           productThumbnail,
                           productPrice,
                           documentID,
                         } = product;
-                        console.log(productName);
+
                         return (
                           <tr key={index}>
                             <td>
-                              <img className="thumb" src={productThumbnail} />
+                              <img
+                                className="thumb"
+                                src={productThumbnail}
+                                alt="thumb"
+                              />
                             </td>
                             <td>{productName}</td>
                             <td>£{productPrice}</td>
@@ -155,6 +175,17 @@ const Admin = () => {
             </tr>
             <tr>
               <td></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellPadding="10px" cellSpacing="0">
+                  <tbody>
+                    <tr>
+                      <td>{!isLastPage && <LoadMore {...configLoadMore} />}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
             </tr>
             <tr>
               <td>

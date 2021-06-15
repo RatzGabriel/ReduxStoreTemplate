@@ -17,7 +17,7 @@ const ProductResults = ({}) => {
   const { filterType } = useParams();
   const { products } = useSelector(mapState);
 
-  const { data } = products;
+  const { data, queryDoc, isLastPage } = products;
 
   //fetch Products
   useEffect(() => {
@@ -59,11 +59,20 @@ const ProductResults = ({}) => {
     handleChange: handleFilter,
   };
 
-  const handleLoadMore = () => {};
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        filterType,
+        startAfterDoc: queryDoc,
+        persistProducts: data,
+      })
+    );
+  };
 
   const configLoadmore = {
     onLoadMoreEvt: handleLoadMore,
   };
+
   return (
     <div className="products">
       <h1>Browse Products</h1>
@@ -85,10 +94,10 @@ const ProductResults = ({}) => {
             productPrice,
           };
 
-          return <Product {...configProduct} />;
+          return <Product key={pos} {...configProduct} />;
         })}
       </div>
-      <LoadMore {...configLoadmore} />
+      {!isLastPage && <LoadMore {...configLoadmore} />}
     </div>
   );
 };
