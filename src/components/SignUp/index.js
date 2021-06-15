@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import FormInput from '../Forms/formInput';
 import Button from '../Forms/Buttons';
 import AuthWrapper from '../AuthWrapper';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUserStart } from '../../Redux/User/user.actions';
 
@@ -13,6 +13,7 @@ const mapState = ({ user }) => ({
 });
 
 const SignUp = (props) => {
+  const history = useHistory();
   const { currentUser, userErr } = useSelector(mapState);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState('');
@@ -24,7 +25,7 @@ const SignUp = (props) => {
   useEffect(() => {
     if (currentUser) {
       resetForm();
-      props.history.push('/');
+      history.push('/');
     }
   }, [currentUser]);
 
@@ -103,4 +104,4 @@ const SignUp = (props) => {
   );
 };
 
-export default withRouter(SignUp);
+export default SignUp;

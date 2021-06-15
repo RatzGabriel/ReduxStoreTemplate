@@ -3,20 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   emailSignInStart,
-  resetAllAuthForms,
-  signInWithGoogle,
+  googleSignInStart,
 } from '../../Redux/User/user.actions';
 import AuthWrapper from '../AuthWrapper';
 import Button from '../Forms/Buttons';
 import FormInput from '../Forms/formInput';
 import './styles.scss';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 });
 
 const SignIn = (props) => {
+  const history = useHistory();
   const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
@@ -26,7 +26,7 @@ const SignIn = (props) => {
     if (currentUser) {
       resetForm();
 
-      props.history.push('/');
+      history.push('/');
     }
   }, [currentUser]);
 
@@ -41,7 +41,7 @@ const SignIn = (props) => {
   };
 
   const handleGoogleSignIn = () => {
-    dispatch(signInWithGoogle());
+    dispatch(googleSignInStart());
   };
 
   const configAuthWrapper = {
@@ -81,4 +81,4 @@ const SignIn = (props) => {
   );
 };
 
-export default withRouter(SignIn);
+export default SignIn;
