@@ -16,7 +16,8 @@ const ProductCard = ({}) => {
   const dispatch = useDispatch();
   const { product } = useSelector(mapState);
   const { productID } = useParams();
-  const { productName, productThumbnail, productPrice } = product;
+  const { productName, productThumbnail, productPrice, productDescription } =
+    product;
 
   useEffect(() => {
     dispatch(fetchProductStart(productID));
@@ -46,6 +47,11 @@ const ProductCard = ({}) => {
             <div className="addToCard">
               <Button {...configtAddToCartBtn}>Add to Cart</Button>
             </div>
+          </li>
+          <li>
+            <span
+              dangerouslySetInnerHTML={{ __html: productDescription }}
+            ></span>
           </li>
         </ul>
       </div>

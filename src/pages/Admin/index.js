@@ -11,6 +11,7 @@ import {
   deleteProductStart,
 } from '../../Redux/Products/products.actions';
 import LoadMore from '../../components/LoadMore';
+import CKEditor from 'ckeditor4-react';
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -24,6 +25,7 @@ const Admin = () => {
   const [productName, setProductName] = useState('');
   const [productThumbnail, setProductThumbnail] = useState('');
   const [productPrice, setProductPrice] = useState(0);
+  const [productDescription, setProductDescription] = useState('');
 
   useEffect(() => {
     dispatch(fetchProductsStart());
@@ -40,6 +42,7 @@ const Admin = () => {
         productName,
         productThumbnail,
         productPrice,
+        productDescription,
       })
     );
     resetForm();
@@ -51,6 +54,7 @@ const Admin = () => {
     setProductThumbnail('');
     setProductPrice(0);
     setHideModal(true);
+    setProductDescription('');
   };
 
   const configModal = {
@@ -114,6 +118,10 @@ const Admin = () => {
               value={productPrice}
               handleChange={(e) => setProductPrice(e.target.value)}
             />
+            <CKEditor
+              onChange={(evt) => setProductDescription(evt.editor.getData())}
+            ></CKEditor>
+            <br />
             <Button type="submit">Add product</Button>
           </form>
         </div>

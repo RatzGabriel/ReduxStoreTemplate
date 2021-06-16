@@ -13,16 +13,11 @@ import {
 } from './products.helpers';
 import { auth } from '../../firebase/Utils';
 
-export function* addProduct({
-  payload: { productCategory, productName, productThumbnail, productPrice },
-}) {
+export function* addProduct({ payload }) {
   try {
     const timestamp = new Date();
     yield handleAddProduct({
-      productCategory,
-      productName,
-      productThumbnail,
-      productPrice,
+      ...payload,
       productAdminUID: auth.currentUser.uid,
       createdDate: timestamp,
     });
