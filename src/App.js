@@ -15,6 +15,7 @@ import Recovery from './pages/Recovery';
 import './default.scss';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
 
 //layouts
 import MainLayout from './Layouts/MainLayout';
@@ -114,6 +115,14 @@ const App = (props) => {
           render={() => (
             <MainLayout>
               <Search />
+            </MainLayout>
+          )}
+        ></Route>
+        <Route
+          path="/product/:productID"
+          render={() => (
+            <MainLayout>
+              <ProductDetails />
             </MainLayout>
           )}
         ></Route>

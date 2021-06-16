@@ -35,7 +35,7 @@ export const handleFetchProducts = ({
       .get()
       .then((snapshot) => {
         const totalCount = snapshot.size;
-        console.log('perzistproducts,', persistProducts);
+
         const data = [
           ...persistProducts,
           ...snapshot.docs.map((doc) => {
@@ -67,6 +67,23 @@ export const handleDeleteProduct = (documentID) => {
       .then(() => {
         console.log(documentID, 2);
         resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const handleFetchProduct = (productID) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection('products')
+      .doc(productID)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          resolve(snapshot.data());
+        }
       })
       .catch((err) => {
         reject(err);
